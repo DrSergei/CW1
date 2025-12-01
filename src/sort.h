@@ -12,41 +12,41 @@ template <typename Range> auto partition(Range vec, uint64_t l, uint64_t r) {
   for (auto j = l; j < r; j++) {
     if (vec[j] < pivot) {
       std::swap(vec[i++], vec[j]);
+    } else if (vec[j] == pivot && (j - l > (r - l) / 2)) {
+      std::swap(vec[i++], vec[j]);
     }
   }
   std::swap(vec[i], vec[r]);
   return i;
 }
 
-constexpr uint64_t N = 100000;
-
-template <typename Range> void sort_seq_impl(Range vec) {
+template <typename Range, uint64_t N> void sort_seq_impl(Range vec) {
   auto n = vec.size();
   if (n < N) {
     std::sort(vec.begin(), vec.end());
     return;
   }
   auto pivot = partition(vec, 0, n - 1);
-  sort_seq_impl(vec.cut(0, pivot));
-  sort_seq_impl(vec.cut(pivot + 1, n));
+  sort_seq_impl<Range, N>(vec.cut(0, pivot));
+  sort_seq_impl<Range, N>(vec.cut(pivot + 1, n));
 }
 
-template <typename Range> void sort_par_impl(Range vec) {
+template <typename Range, uint64_t N> void sort_par_impl(Range vec) {
   auto n = vec.size();
   if (n < N) {
     std::sort(vec.begin(), vec.end());
     return;
   }
   auto pivot = partition(vec, 0, n - 1);
-  parlay::par_do([&] { sort_par_impl(vec.cut(0, pivot)); },
-                 [&] { sort_par_impl(vec.cut(pivot + 1, n)); });
+  parlay::par_do([&] { sort_par_impl<Range, N>(vec.cut(0, pivot)); },
+                 [&] { sort_par_impl<Range, N>(vec.cut(pivot + 1, n)); });
 }
 } // namespace detail
 
-template <typename Range> auto sort_seq(Range &vec) {
-  detail::sort_seq_impl(vec.cut(0, vec.size()));
+template <typename Range, uint64_t N = 100000> auto sort_seq(Range &vec) {
+  detail::sort_seq_impl<decltype(vec.cut(0, 0)), N>(vec.cut(0, vec.size()));
 }
 
-template <typename Range> auto sort_par(Range &vec) {
-  detail::sort_par_impl(vec.cut(0, vec.size()));
+template <typename Range, uint64_t N = 100000> auto sort_par(Range &vec) {
+  detail::sort_par_impl<decltype(vec.cut(0, 0)), N>(vec.cut(0, vec.size()));
 }

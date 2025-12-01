@@ -24,18 +24,6 @@ Execution trace example on my laptop: WSL2, AMD Ryzen 7 8845HS.
 
 ```sh
 sergei@DrSergei:~/CW1$ ./run.sh
--- The C compiler identification is GNU 13.3.0
--- The CXX compiler identification is GNU 13.3.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /usr/bin/cc - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /usr/bin/c++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
 -- PARLAY VERSION 2.3.3
 -- ---------------------------- General configuration -----------------------------
 -- CMake Generator:                Ninja
@@ -47,9 +35,6 @@ sergei@DrSergei:~/CW1$ ./run.sh
 -- CMAKE_CXX_FLAGS_RELWITHDEBINFO: -O2 -g -DNDEBUG -fno-omit-frame-pointer
 -- CMAKE_EXE_LINKER_FLAGS          
 -- CMAKE_INSTALL_PREFIX:           /usr/local
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
--- Found Threads: TRUE  
 -- -------------------------------- Library options ------------------------------
 -- Using Parlay scheduler. Switch with -DPARLAY_{CILKPLUS,OPENCILK,OPENMP,TBB}=On
 -- Elastic parallelism enabled. Disable with -DPARLAY_ELASTIC_PARALLELISM=Off
@@ -64,14 +49,14 @@ sergei@DrSergei:~/CW1$ ./run.sh
 -- ----------------------------------- Examples -----------------------------------
 -- examples: Disabled (enable with -DPARLAY_EXAMPLES=On)
 -- example data: Off (add -DPARLAY_EXAMPLE_DATA=On to download)
--- Configuring done (1.1s)
+-- Configuring done (0.0s)
 -- Generating done (0.0s)
 -- Build files have been written to: /home/sergei/CW1/build
-[6/6] Linking CXX executable src/tests
+ninja: no work to do.
 Run parallel sort
-Average time: 2.5535
+Average time: 4.0559
 Run sequential sort
-Average time: 8.2052
+Average time: 12.3733
 Run tests
 Tests success
 sergei@DrSergei:~/CW1$ 
